@@ -13,13 +13,12 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="C:/Program Files/MySQL/MySQL Server 8.0/include" />
+					<Add directory="C:/Users/ediva/Downloads/mysql-connector-c-6.1.11-winx64/mysql-connector-c-6.1.11-winx64/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-lmysql" />
-					<Add library="C:/Program Files/MySQL/MySQL Server 8.0/lib/libmysql.lib" />
-					<Add library="C:/Program Files/MySQL/MySQL Server 8.0/lib/mysqlclient.lib" />
-					<Add directory="C:/Program Files/MySQL/MySQL Server 8.0/lib" />
+					<Add library="C:/Users/ediva/Downloads/mysql-connector-c-6.1.11-winx64/mysql-connector-c-6.1.11-winx64/lib/vs12/mysqlclient.lib" />
+					<Add directory="C:/Users/ediva/Downloads/mysql-connector-c-6.1.11-winx64/mysql-connector-c-6.1.11-winx64/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -29,9 +28,15 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="C:/Users/ediva/Downloads/mysql-connector-c-6.1.11-winx64/mysql-connector-c-6.1.11-winx64/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-lmysql" />
+					<Add library="C:/Users/ediva/Downloads/mysql-connector-c-6.1.11-winx64/mysql-connector-c-6.1.11-winx64/lib/vs12/mysqlclient.lib" />
+					<Add library="C:/Users/ediva/Downloads/mysql-connector-c-6.1.11-winx64/mysql-connector-c-6.1.11-winx64/lib/libmysql.lib" />
+					<Add library="C:/Users/ediva/Downloads/mysql-connector-c-6.1.11-winx64/mysql-connector-c-6.1.11-winx64/lib/libmysql.dll" />
+					<Add directory="C:/Users/ediva/Downloads/mysql-connector-c-6.1.11-winx64/mysql-connector-c-6.1.11-winx64/lib" />
 				</Linker>
 			</Target>
 		</Build>
