@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1714253465 source:c:\users\ediva\desktop\trabalho estrutura de dados\gerenciamentodevoos\main.c
+1714589294 source:c:\users\ediva\desktop\trabalho estrutura de dados\gerenciamentodevoos\main.c
 	<stdio.h>
 	<stdlib.h>
-	<mysql.h>
+	<string.h>
 
 1702415376 c:\program files\mysql\mysql server 8.0\include\mysql.h
 	<stdbool.h>

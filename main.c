@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <mysql.h>
+//#include <mysql.h>
 #define TAMANHO_FILA 5
 #define TAMANHO_NOME 256
 #define NUMERO_PASSAGEIROS 5
-
 
 /*
 === CONEXÃO MYSQL E QUERIES ===
 */
 
-
+/*
 void conecta(MYSQL *conn){
     if (!mysql_real_connect(conn, "localhost", "root", "", NULL, 3306, NULL, 0))
     {
@@ -64,7 +63,8 @@ void InsereVoo(MYSQL *conn, char *Destino, int *NumeroPassageiros){
     char textoTemporario[100000000];
     char *query = "INSERT INTO aviao (destino, número de usuários) VALUES ('";
     sprintf(textoTemporario, "%d", NumeroPassageiros);
-    //if (mysql_query(conn, strcat("INSERT INTO aviao (destino, número de usuários) VALUES ('",Destino))) {
+    //if (mysql_query(conn, strcat("INSERT INTO aviao (destino, número de
+usuários) VALUES ('",Destino))) {
      //       printaErro(conn, "Erro na busca dos dados");
      //   }
 
@@ -74,13 +74,12 @@ void InsereVoo(MYSQL *conn, char *Destino, int *NumeroPassageiros){
 
 void deletaVoo(MYSQL *conn, int idVoo){
 
-    if (mysql_query(conn, strcat("DELETE FROM aviao WHERE idTeste = ;", idVoo))) {
-            printaErro(conn, "Erro ao deletar voo");
+    if (mysql_query(conn, strcat("DELETE FROM aviao WHERE idTeste = ;", idVoo)))
+{ printaErro(conn, "Erro ao deletar voo");
         }
 
 }
-
-
+*/
 
 /*
 ===  LISTA LIGADA E OPERAÇÕES ===
@@ -102,7 +101,8 @@ void inicializarPassageiro(struct ListaLigadaPassageiro *lista) {
   lista->tamanho = 0;
 };
 
-void inserirPassageiro(struct ListaLigadaPassageiro *lista, const char *nome, const char *cpf) {
+void inserirPassageiro(struct ListaLigadaPassageiro *lista, const char *nome,
+                       const char *cpf) {
   struct Passageiro *novo =
       (struct Passageiro *)malloc(sizeof(struct Passageiro));
   if (novo == NULL) {
@@ -219,7 +219,6 @@ void liberarLista(struct ListaLigadaPassageiro *lista) {
   lista->tamanho = 0;
 }
 
-
 // =============
 // === AVIÃO ===
 // =============
@@ -228,35 +227,35 @@ struct Aviao {
   char destino[200];
   int numeroDePassageiros;
   struct ListaLigadaPassageiro listaDePassageiros;
-  struct Aviao* proximo;
+  struct Aviao *proximo;
 };
 
 struct ListaLigadaAviao {
-  struct Aviao* elemento;
+  struct Aviao *elemento;
   int tamanho;
 };
 
-void inicializarAviao(struct ListaLigadaAviao* lista) {
+void inicializarAviao(struct ListaLigadaAviao *lista) {
   lista->elemento = NULL;
   lista->tamanho = 0;
 };
 
-void inserirAviao(struct ListaLigadaAviao* lista, const char* nome, const char* casa) {
-  struct Aviao* novo
-    = (struct Aviao*)malloc(sizeof(struct Aviao));
+void inserirAviao(struct ListaLigadaAviao *lista, const char *nome,
+                  int numero_de_passageiros) {
+  struct Aviao *novo = (struct Aviao *)malloc(sizeof(struct Aviao));
   if (novo == NULL) {
     printf("Erro na alocação de memória.\n");
     return;
   }
 
   strcpy(novo->destino, nome);
-  strcpy(novo->numeroDePassageiros, casa);
+  novo->numeroDePassageiros = numero_de_passageiros;
   novo->proximo = NULL;
 
   if (lista->elemento == NULL) {
     lista->elemento = novo;
   } else {
-    struct Aviao* atual = lista->elemento;
+    struct Aviao *atual = lista->elemento;
     while (atual->proximo != NULL) {
       atual = atual->proximo;
     }
@@ -266,14 +265,14 @@ void inserirAviao(struct ListaLigadaAviao* lista, const char* nome, const char* 
   lista->tamanho++;
 }
 
-void removerAviao (struct ListaLigadaAviao* lista, int posicao) {
+void removerAviao(struct ListaLigadaAviao *lista, int posicao) {
   if (posicao < 0 || posicao >= lista->tamanho) {
     printf("Posição inválida.\n");
     return;
   }
 
-  struct Aviao* anterior = NULL;
-  struct Aviao* atual = lista->elemento;
+  struct Aviao *anterior = NULL;
+  struct Aviao *atual = lista->elemento;
   int contador = 0;
 
   while (atual != NULL && contador < posicao) {
@@ -294,17 +293,18 @@ void removerAviao (struct ListaLigadaAviao* lista, int posicao) {
   }
 }
 
-void exibirAviao(struct ListaLigadaAviao* lista) {
-  printf("Lista de Personagens:\n");
-  struct Aviao* atual = lista->elemento;
-  while (atual != NULL) {
-    printf("Nome: %s, Casa: %s\n", atual->destino, atual->numeroDePassageiros);
+void exibirAviao(struct ListaLigadaAviao *lista) {
+  printf("Lista de Viagens:\n");
+  struct Aviao *atual = lista->elemento;
+  for (int i = 1; atual != NULL; i++) {
+    printf("%d-Nome: %s, Numero de Passageiros: %d\n", i, atual->destino,
+           atual->numeroDePassageiros);
     atual = atual->proximo;
   }
 }
 
-int buscarAviao(struct ListaLigadaAviao* lista, const char* nome) {
-  struct Aviao* atual = lista->elemento;
+int buscarAviao(struct ListaLigadaAviao *lista, const char *nome) {
+  struct Aviao *atual = lista->elemento;
   int posicao = 0;
 
   while (atual != NULL && strcmp(atual->destino, nome) != 0) {
@@ -318,7 +318,7 @@ int buscarAviao(struct ListaLigadaAviao* lista, const char* nome) {
   }
 }
 
-void selectionSortAviao (struct ListaLigadaAviao* lista) {
+void selectionSortAviao(struct ListaLigadaAviao *lista) {
   struct Aviao *atual, *menor, *proximo;
   char temp_nome[30], temp_casa[20];
 
@@ -346,10 +346,10 @@ void selectionSortAviao (struct ListaLigadaAviao* lista) {
   }
 }
 
-void liberarListaAviao(struct ListaLigadaAviao* lista) {
-  struct Aviao* atual = lista->elemento;
+void liberarListaAviao(struct ListaLigadaAviao *lista) {
+  struct Aviao *atual = lista->elemento;
   while (atual != NULL) {
-    struct Aviao* proximo = atual->proximo;
+    struct Aviao *proximo = atual->proximo;
     free(atual);
     atual = proximo;
   }
@@ -357,10 +357,6 @@ void liberarListaAviao(struct ListaLigadaAviao* lista) {
   lista->elemento = NULL;
   lista->tamanho = 0;
 }
-
-
-
-
 
 /*
 ===  FILA DINÂMICA E OPERAÇÕES ===
@@ -391,10 +387,8 @@ Voo peek(Fila *fila);
 int tamanhoFila(Fila *fila);
 void liberarFila(Fila *fila);
 void reinicializarFila(Fila *fila);
-Voo* filaParaArray(Fila *fila);
-Fila* arrayParaFila(Voo* array, int tamanho);
-
-
+Voo *filaParaArray(Fila *fila);
+Fila *arrayParaFila(Voo *array, int tamanho);
 
 void ListarVoos() {
   printf("=== Lista de Voos ===\n");
@@ -407,10 +401,9 @@ void ListarVoos() {
 
 int main() {
 
-  MYSQL *conn = mysql_init(NULL);
+  // MYSQL *conn = mysql_init(NULL);
 
-  conecta(conn);
-
+  // conecta(conn);
 
   // Declara uma variável do tipo FilaVoo
   Fila minhaFila;
@@ -419,7 +412,10 @@ int main() {
 
   struct ListaLigadaAviao minhaListaLigadaAviao;
 
+
   inicializarAviao(&minhaListaLigadaAviao);
+
+
 
   printf("Sistema de Gerenciamento de Voos\n");
 
@@ -427,61 +423,88 @@ int main() {
   int opcao2;
   do {
     // Exibe o menu
-    printf("\nMenu:\n");
-    printf("1. Novo voo\n");
-    printf("2. Cancelar Voo\n");
-    printf("3. Primeiro da fila\n");
-    printf("4. Tamanho da fila\n");
-    printf("5. Reinicializar fila\n");
-    printf("6. Acessar voo\n");
-    printf("7. Sair\n");
+    printf("\nOperações:\n");
+    printf("1. Novo voo.\n");
+    printf("2. Cancelar Voo/Liberar decolagem.\n");
+    printf("3. Primeiro da fila.\n");
+    printf("4. Tamanho da fila.\n");
+    printf("5. Reinicializar fila.\n");
+    printf("6. Acessar voo.\n");
+    printf("7. Sair.\n");
     printf("Escolha uma opção: ");
     scanf("%d", &opcao);
     getchar();
 
     switch (opcao) {
     case 1: {
-
-
+      // Antedeguemon
       char nome[TAMANHO_NOME];
       int passouDoTesteDeTamanho = 1;
       int deuCerto = 0;
-        printf("Digite o destino do Voo: ");
-        deuCerto = fgets(nome, TAMANHO_NOME, stdin);
+      printf("Digite o destino do Voo: ");
+      fgets(nome, TAMANHO_NOME, stdin);
+      nome[strcspn(nome, "\n")] = '\0';
 
-
-      printf("deuCerto: %d, nome: %s", &deuCerto, nome);
+      // printf("deuCerto: %d, nome: %s", &deuCerto, nome);
 
       char numero[TAMANHO_NOME];
-      printf("Digite a quantidade de passageiros:");
+      printf("Digite a quantidade de Assentos: ");
       fgets(numero, TAMANHO_NOME, stdin);
 
-      Voo Destino = {"",0};
-      printf(nome);
+      Voo Destino = {"", 0};
+      // printf(nome);
       Destino.numeroDePassageiros = atoi(numero);
-      printf("NUMPAS %d", Destino.numeroDePassageiros);
+      // printf("NUMPAS %d", Destino.numeroDePassageiros);
       for (int i = 0; i < TAMANHO_NOME; i++) {
         Destino.nome[i] = nome[i];
       }
+
+      printf("\nVoo a ser cadastrado: \nDestino: %s\nNumero De Assentos: "
+             "%d \n",
+             Destino.nome, Destino.numeroDePassageiros);
+      int abc = 1;
+      while (abc) {
+        printf("Realizar o Cadastro do Voo? (S/n): ");
+        char resposta[TAMANHO_NOME];
+        scanf("%s", resposta);
+        if (strcmp(resposta, "n") == 0 | strcmp(resposta, "N") == 0) {
+          //printf("Para\n");
+          abc = 2;
+          break;
+        } else if (strcmp(resposta, "s") == 0 | strcmp(resposta, "S") == 0) {
+          abc = 0;
+          //printf("Segue em frente\n");
+        } else {
+          printf("Entrada Inválida\n");
+        }
+      }
+      if (abc == 2) {
+        break;
+      }
+
       enqueue(&minhaFila, Destino);
+
+      inserirAviao(&minhaListaLigadaAviao, Destino.nome,
+                   Destino.numeroDePassageiros);
+
+
+
       break;
-
-
-
     }
     case 2: {
       if (!filaVazia(&minhaFila)) {
         Voo pessoaRemovida = dequeue(&minhaFila);
-        printf("Removendo Voo: %s\n", pessoaRemovida.nome);
+        printf("Removendo Voo/Voo a decolar: %s\n", pessoaRemovida.nome);
       } else {
-        printf("Erro: Fila vazia.\n");
+        printf("Fila vazia.\n");
       }
       break;
     }
     case 3: {
       if (!filaVazia(&minhaFila)) {
         Voo inicioFila = peek(&minhaFila);
-        printf("Voo no início da fila: %s N.Passageiros: %d\n", inicioFila.nome, inicioFila.numeroDePassageiros);
+        printf("Voo no início da fila: %s N.Assentos: %d\n", inicioFila.nome,
+               inicioFila.numeroDePassageiros);
       } else {
         printf("Erro: Fila de decolagem vazia.\n");
       }
@@ -498,20 +521,36 @@ int main() {
     }
     case 6: {
       do {
-        int vooSelecionado;
-
+          if(minhaListaLigadaAviao.tamanho == 0){
+            printf("Nenhum voo cadastrado\n");
+            break;
+          }
+        int vooSelecionado = 1;
+        int passou = 1;
+        while(passou){
+        printf("\n");
 
         exibirAviao(&minhaListaLigadaAviao);
 
-
-        printf("Digite o número do voo desejado: ");
+        printf("\nDigite o número do voo desejado: ");
         scanf("%d", &vooSelecionado);
+
+        if(vooSelecionado <= 0 || vooSelecionado >= (minhaListaLigadaAviao.tamanho + 1)){
+            printf("\nEntrada Inválida\n");
+        } else {
+            passou = 0;
+        }
+
+        }
+
+        vooSelecionado--;
 
         printf("\nOperações do Voo.\n");
         printf("1. Listar Dados do Voo.\n");
-        printf("2. Listar os Passageiros.\n");
-        printf("3. Novo pasageiro.\n");
-        printf("4. Realizar Leilão de upgrade de classe\n");
+        printf("2. Novo pasageiro.\n");
+        printf("3. Listar os Passageiros.\n");
+        printf("4. Realizar Leilão de upgrade de classe.\n");
+        printf("5. Voltar.\n");
 
         printf("Selecione uma opção: ");
 
@@ -520,23 +559,12 @@ int main() {
         switch (opcao2) {
         case 1: {
           // Função de listar dados do voo
-          printf("Dados do Voo selecionado: \n");
-          printf("Linha aérea: %s\n", "Cleberson Air Max");
-          printf("Destino: %s\n", "Brasilia");
-          printf("Data: %s\n", "12/05/2024");
-          printf("Horário: %s\n", "19:00");
-          printf("Número de passageiros: %d\n", 100);
+          printf("Destino: %s \n Numero de Assentos: %d \n Numero de passageiros cadastrados: %d", minhaListaLigadaAviao.elemento[vooSelecionado].destino
+                 ,minhaListaLigadaAviao.elemento[vooSelecionado].numeroDePassageiros,minhaListaLigadaAviao.elemento[vooSelecionado].listaDePassageiros.tamanho);
           break;
         }
         case 2: {
-          // Função de listar passageiros
-          printf("Lista de Passageiros:\n");
-          for (int i = 0; i < TAMANHO_FILA; i++){
-            printf("Nome: %s, CPF: %s\n", minhaListaLigadaAviao.elemento[i]);
-          }
-        }
-        case 3: {
-          // Função de novo Passageiro
+          // Função de novo Passageiro Atumalaca
           char nome[TAMANHO_NOME];
           char cpf[12];
           char simounao[123123];
@@ -548,35 +576,55 @@ int main() {
           scanf("%s", cpf);
           printf("Passageiro participa do leilão de upgrade de classe? (S/N)\n");
           scanf("%s", simounao);
-          if(strcmp(simounao, "S") || strcmp(simounao, "SIM") || strcmp(simounao, "s") || strcmp(simounao, "sim"))
-          {
-          participaDoLeilao = 1;
-          int piton = 1;
-          while(piton){
-          printf("(Lance Mínimo: R$ 1000)\n");
-          printf("Qual o valor do lance do passageiro?\n");
-          scanf("%f", &valorDoLance);
-          if(valorDoLance >= 1000.0){
-            piton = 0;
-          } else {
-            printf("Digite um valor maior que o lance mínimo\n");
+          if (strcmp(simounao, "S") || strcmp(simounao, "SIM") ||
+              strcmp(simounao, "s") || strcmp(simounao, "sim")) {
+            participaDoLeilao = 1;
+            int piton = 1;
+            while (piton) {
+              printf("(Lance Mínimo: R$ 1000)\n");
+              printf("Qual o valor do lance do passageiro?\n");
+              scanf("%f", &valorDoLance);
+              if (valorDoLance >= 1000.0) {
+                piton = 0;
+              } else {
+                printf("Digite um valor maior que o lance mínimo\n");
+              }
+            }
           }
-
-          }
-          }
-          //inserir(&minhaFila, nome, cpf);
+          inserirPassageiro(&minhaListaLigadaAviao.elemento[vooSelecionado].listaDePassageiros, nome, cpf);
           break;
         }
-          case 4:{
-            // Função de upgrade de classe();
-
-            printf("Ganhadores do upgrade de classe\n");
-            printf("1. %s\n", "Cleberson Air Max");
-            printf("2. %s\n", "Cleberson Air Max");
-            printf("3. %s\n", "Cleberson Air Max");
-            printf("4. %s\n", "Cleberson Air Max");
-            printf("5. %s\n", "Cleberson Air Max");
+        case 3: {
+          // Função de listar passageiros
+          printf("\nLista de Passageiros:\n");
+          /*if (minhaListaLigadaAviao.tamanho > 0) {
+            for (int i = 0; i < minhaListaLigadaAviao.elemento[vooSelecionado].listaDePassageiros.tamanho; i++) {
+              printf("i equivale a : %d", i);
+              printf("\nNome: %s, CPF: %s\n",
+                     minhaListaLigadaAviao.elemento[vooSelecionado]
+                         .listaDePassageiros.elemento[i].nome,
+                     minhaListaLigadaAviao.elemento[vooSelecionado]
+                         .listaDePassageiros.elemento[i].cpf);
+            }
           }
+           */
+          exibirPassageiros(&minhaListaLigadaAviao.elemento[vooSelecionado].listaDePassageiros);
+
+          break;
+        }
+        case 4: {
+          // Função de upgrade de classe();
+          printf("A fazer \n");
+          /*
+                    printf("Ganhadores do upgrade de classe\n");
+                    printf("1. %s\n", "Cleberson Air Max");
+                    printf("2. %s\n", "Cleberson Air Max");
+                    printf("3. %s\n", "Cleberson Air Max");
+                    printf("4. %s\n", "Cleberson Air Max");
+                    printf("5. %s\n", "Cleberson Air Max");
+            */
+          break;
+        }
         case 5: {
           break;
         }
@@ -611,9 +659,8 @@ int inicializarFila(Fila *fila) {
   fila->inicio = 0;
   fila->fim = -1;
   fila->tamanho = 0;
-  fila->capacidade = 1;  // Capacidade inicial
-  fila->elementos
-    = (Voo *)malloc(fila->capacidade * sizeof(Voo));
+  fila->capacidade = 1; // Capacidade inicial
+  fila->elementos = (Voo *)malloc(fila->capacidade * sizeof(Voo));
   if (fila->elementos == NULL) {
     printf("Erro de alocação de memória.\n");
     return -1;
@@ -622,16 +669,14 @@ int inicializarFila(Fila *fila) {
 }
 
 // Função para verificar se a fila está vazia
-int filaVazia(Fila *fila) {
-  return fila->tamanho == 0;
-}
+int filaVazia(Fila *fila) { return fila->tamanho == 0; }
 
 // Função para redimensionar a capacidade da fila
 int redimensionarFila(Fila *fila) {
   // Dobrar a capacidade
   int novaCapacidade = fila->capacidade * 2;
-  Voo *novoArray = (Voo *)realloc(fila->elementos,
-    novaCapacidade * sizeof(Voo));
+  Voo *novoArray =
+      (Voo *)realloc(fila->elementos, novaCapacidade * sizeof(Voo));
   if (novoArray == NULL) {
     printf("Erro de realocação de memória.\n");
     return -1;
@@ -674,14 +719,10 @@ Voo peek(Fila *fila) {
 }
 
 // Função para liberar a memória alocada para a fila
-void liberarFila(Fila *fila) {
-  free(fila->elementos);
-}
+void liberarFila(Fila *fila) { free(fila->elementos); }
 
 // Função para retornar o tamanho da fila
-int tamanhoFila(Fila *fila) {
-  return fila->tamanho;
-}
+int tamanhoFila(Fila *fila) { return fila->tamanho; }
 
 // Função para reinicializar a fila
 void reinicializarFila(Fila *fila) {
@@ -690,10 +731,9 @@ void reinicializarFila(Fila *fila) {
   fila->tamanho = 0;
 }
 
-
 // Função para converter a fila em um vetor de Item
-Voo* filaParaArray(Fila *fila) {
-  Voo* array = (Voo*)malloc(fila->tamanho * sizeof(Voo));
+Voo *filaParaArray(Fila *fila) {
+  Voo *array = (Voo *)malloc(fila->tamanho * sizeof(Voo));
   if (array == NULL) {
     printf("Erro: Falha ao alocar memória para o vetor.\n");
     return NULL;
@@ -706,11 +746,9 @@ Voo* filaParaArray(Fila *fila) {
   return array;
 }
 
-
-
 // Função para converter um vetor de item para a fila
-Fila* arrayParaFila(Voo* array, int tamanho) {
-  Fila* fila = (Fila*)malloc(sizeof(Fila));
+Fila *arrayParaFila(Voo *array, int tamanho) {
+  Fila *fila = (Fila *)malloc(sizeof(Fila));
   if (fila == NULL) {
     printf("Erro: Falha ao alocar memória para a fila.\n");
     return NULL;
@@ -722,5 +760,3 @@ Fila* arrayParaFila(Voo* array, int tamanho) {
   fila->elementos = array;
   return fila;
 }
-
-
